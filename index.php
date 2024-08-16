@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Portfolio</title>
+    <title>Your Name - Prasanth M </title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,7 +17,7 @@
             </ul>
         </nav>
         <h1>Your Name</h1>
-        <p>Web Developer | Designer | Your Role</p>
+        <p>Cloud Architect | Devop Engineer | Your Role</p>
     </header>
 
     <section id="about">

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prasanth M — Cloud Solution Architect & DevOps Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:       #05090f;
+      --surface:  #0b1422;
+      --card:     #0f1d2e;
+      --border:   #182d44;
+      --accent:   #00d4ff;
+      --accent2:  #00ff88;
+      --accent3:  #ff6b35;
+      --accent4:  #ffd700;
+      --text:     #cdd9e5;
+      --muted:    #4e6070;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Syne', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--mono); overflow-x: hidden; line-height: 1.6;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,.025) 1px, transparent 1px);
+      background-size: 44px 44px; pointer-events: none; z-index: 0;
+    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 4rem;
+      background: rgba(5,9,15,.88); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--mono); font-weight: 700; font-size: .9rem; color: var(--accent); letter-spacing: .08em; }
+    .nav-logo span { color: var(--accent2); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: .76rem; text-decoration: none; letter-spacing: .1em; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-status { display: flex; align-items: center; gap: .5rem; font-size: .72rem; color: var(--accent2); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 8px var(--accent2);}50%{opacity:.3;} }
+
+    /* BG GLOWS */
+    .bg-glow { position: fixed; border-radius: 50%; pointer-events: none; filter: blur(110px); opacity: .10; z-index: 0; }
+    .bg-glow-1 { width: 550px; height: 550px; background: var(--accent); top: -150px; right: -150px; }
+    .bg-glow-2 { width: 420px; height: 420px; background: var(--accent2); bottom: 5%; left: -120px; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; display: grid; grid-template-columns: 1.1fr 0.9fr;
+      align-items: center; padding: 6.5rem 4rem 4rem;
+      position: relative; z-index: 1; gap: 4rem;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.4rem;
+    }
+    .hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+    h1 { font-family: var(--sans); font-size: clamp(2.6rem, 4.5vw, 4.4rem); font-weight: 800; line-height: 1.05; color: #fff; margin-bottom: .8rem; }
+    h1 .name { color: var(--accent); display: block; }
+    h1 .role { color: transparent; -webkit-text-stroke: 1.5px var(--border); display: block; font-size: clamp(1.4rem, 2.5vw, 2.2rem); }
+    .hero-location { display: flex; align-items: center; gap: .5rem; font-size: .76rem; color: var(--muted); margin: .8rem 0 1.4rem; }
+    .hero-location span { color: var(--accent3); }
+    .hero-desc { font-size: .86rem; color: var(--muted); max-width: 500px; line-height: 1.85; margin-bottom: 2rem; }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      padding: .7rem 1.8rem; background: var(--accent); color: var(--bg);
+      font-family: var(--mono); font-weight: 700; font-size: .78rem;
+      letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+      border: none; cursor: pointer;
+      clip-path: polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+      transition: all .25s;
+    }
+    .btn-primary:hover { background: #fff; box-shadow: 0 0 28px var(--accent); }
+    .btn-ghost {
+      padding: .7rem 1.8rem; background: transparent; color: var(--text);
+      font-family: var(--mono); font-weight: 500; font-size: .78rem;
+      letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+      cursor: pointer; border: 1px solid var(--border);
+      clip-path: polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+      transition: all .25s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* TERMINAL */
+    .terminal { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 0 70px rgba(0,212,255,.07), 0 40px 80px rgba(0,0,0,.6); }
+    .term-bar { display: flex; align-items: center; gap: .6rem; padding: .7rem 1rem; background: rgba(0,0,0,.35); border-bottom: 1px solid var(--border); }
+    .td { width: 10px; height: 10px; border-radius: 50%; }
+    .td.r{background:#ff5f56;} .td.y{background:#ffbd2e;} .td.g{background:#27c93f;}
+    .term-title { margin-left: .5rem; font-size: .7rem; color: var(--muted); }
+    .term-body { padding: 1.4rem; font-size: .76rem; line-height: 2.05; }
+    .tl { display: flex; gap: .5rem; }
+    .pr { color: var(--accent2); flex-shrink: 0; }
+    .cm { color: var(--text); }
+    .out { color: var(--muted); padding-left: 1.2rem; display: block; }
+    .vg { color: var(--accent2); } .vb { color: var(--accent); } .vo { color: var(--accent3); }
+    .cursor { display: inline-block; width: 8px; height: 1em; background: var(--accent); animation: blink .8s step-end infinite; vertical-align: text-bottom; }
+    @keyframes blink { 50%{opacity:0;} }
+
+    /* METRICS */
+    .metrics-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--surface); position: relative; z-index: 1;
+    }
+    .metric { padding: 2rem 2.5rem; border-right: 1px solid var(--border); position: relative; overflow: hidden; transition: background .3s; }
+    .metric:last-child { border-right: none; }
+    .metric:hover { background: rgba(0,212,255,.03); }
+    .metric::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent),transparent); opacity:0; transition:opacity .3s; }
+    .metric:hover::before { opacity:1; }
+    .metric-num { font-family: var(--sans); font-size: 2.6rem; font-weight: 800; color: #fff; line-height: 1; }
+    .metric-num span { color: var(--accent); }
+    .metric-label { font-size: .68rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-top: .35rem; }
+
+    /* SECTION */
+    section { padding: 5.5rem 4rem; position: relative; z-index: 1; }
+    .section-header { margin-bottom: 3rem; }
+    .section-tag { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--accent3); margin-bottom: .5rem; }
+    .section-tag::before { content: '// '; }
+    h2 { font-family: var(--sans); font-size: clamp(1.7rem, 2.8vw, 2.4rem); font-weight: 800; color: #fff; }
+    h2 em { color: var(--accent); font-style: normal; }
+
+    /* SKILLS */
+    #skills { background: var(--surface); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.25rem; }
+    .skill-card { background: var(--bg); border: 1px solid var(--border); padding: 1.4rem; position: relative; overflow: hidden; transition: border-color .3s; }
+    .skill-card:hover { border-color: var(--accent); }
+    .skill-card::after { content:''; position:absolute; top:0; right:0; width:36px; height:36px; background:var(--accent); clip-path:polygon(100% 0,0 0,100% 100%); opacity:.05; }
+    .skill-icon { font-size: 1.6rem; margin-bottom: .8rem; }
+    .skill-title { font-family: var(--sans); font-weight: 700; font-size: .95rem; color: #fff; margin-bottom: .65rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .tag { font-size: .66rem; padding: .22rem .6rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: .04em; transition: all .2s; }
+    .tag:hover { border-color: var(--accent2); color: var(--accent2); }
+    .tag.hl  { border-color: rgba(0,212,255,.4);  color: var(--accent);  }
+    .tag.hl2 { border-color: rgba(0,255,136,.4);  color: var(--accent2); }
+    .tag.hl3 { border-color: rgba(255,107,53,.4); color: var(--accent3); }
+    .tag.hl4 { border-color: rgba(255,215,0,.4);  color: var(--accent4); }
+
+    /* EXPERIENCE */
+    #experience { background: var(--bg); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content:''; position:absolute; top:0; bottom:0; left:0; width:1px; background:linear-gradient(to bottom,transparent,var(--accent) 20%,var(--accent2) 80%,transparent); }
+    .exp-item { position: relative; padding: 0 0 3.5rem 2.5rem; }
+    .exp-dot { position:absolute; left:-5px; top:8px; width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 14px var(--accent); }
+    .exp-header { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:.5rem; margin-bottom:.6rem; }
+    .exp-role { font-family: var(--sans); font-weight: 700; font-size: 1.1rem; color: #fff; }
+    .exp-period { font-size: .7rem; color: var(--accent3); letter-spacing: .08em; padding: .2rem .7rem; border: 1px solid rgba(255,107,53,.3); white-space: nowrap; }
+    .exp-company { font-size: .78rem; color: var(--accent); margin-bottom: .7rem; letter-spacing: .05em; }
+    .exp-achievements { list-style: none; }
+    .exp-achievements li { font-size: .8rem; color: var(--muted); line-height: 1.95; padding-left: 1.2rem; position: relative; }
+    .exp-achievements li::before { content:'▸'; position:absolute; left:0; color:var(--accent2); }
+    .exp-stack { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .8rem; }
+
+    /* PROJECTS */
+    #projects { background: var(--surface); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.4rem; }
+    .project-card { background: var(--bg); border: 1px solid var(--border); padding: 1.6rem; position: relative; overflow: hidden; transition: all .3s; }
+    .project-card:hover { border-color: var(--accent); box-shadow: 0 0 28px rgba(0,212,255,.1); transform: translateY(-4px); }
+    .project-num { font-size: .66rem; color: var(--muted); letter-spacing: .12em; margin-bottom: .9rem; }
+    .project-title { font-family: var(--sans); font-weight: 700; font-size: 1.05rem; color: #fff; margin-bottom: .45rem; }
+    .project-client { font-size: .72rem; color: var(--accent3); margin-bottom: .6rem; }
+    .project-desc { font-size: .78rem; color: var(--muted); line-height: 1.8; margin-bottom: .9rem; }
+    .project-impact { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: .9rem; }
+    .impact-badge { font-size: .68rem; padding: .25rem .75rem; background: rgba(0,255,136,.06); border: 1px solid rgba(0,255,136,.22); color: var(--accent2); }
+
+    /* CLIENTS */
+    #clients { background: var(--bg); }
+    .clients-grid { display: flex; flex-wrap: wrap; gap: .75rem; }
+    .client-pill { font-size: .74rem; padding: .45rem 1.1rem; border: 1px solid var(--border); color: var(--muted); transition: all .25s; letter-spacing: .04em; cursor: default; }
+    .client-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* CERTS */
+    #certifications { background: var(--surface); }
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.1rem; }
+    .cert-card { background: var(--card); border: 1px solid var(--border); padding: 1.4rem; display: flex; align-items: flex-start; gap: .9rem; transition: all .3s; }
+    .cert-card:hover { border-color: var(--accent4); }
+    .cert-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .cert-name { font-family: var(--sans); font-weight: 700; font-size: .88rem; color: #fff; margin-bottom: .25rem; }
+    .cert-issuer { font-size: .7rem; color: var(--accent); }
+    .cert-year { font-size: .66rem; color: var(--muted); margin-top: .2rem; }
+
+    /* EDUCATION */
+    #education { background: var(--bg); }
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+    .edu-card { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; transition: border-color .3s; }
+    .edu-card:hover { border-color: var(--accent2); }
+    .edu-degree { font-family: var(--sans); font-weight: 700; font-size: .95rem; color: #fff; margin-bottom: .3rem; }
+    .edu-school { font-size: .78rem; color: var(--accent); margin-bottom: .25rem; }
+    .edu-year { font-size: .7rem; color: var(--muted); }
+
+    /* CONTACT */
+    #contact { background: var(--surface); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .contact-info h3 { font-family: var(--sans); font-weight: 700; font-size: 1.45rem; color: #fff; margin-bottom: .9rem; }
+    .contact-info p { font-size: .82rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.8rem; }
+    .contact-links { display: flex; flex-direction: column; gap: .65rem; }
+    .contact-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); font-size: .8rem; padding: .7rem 1rem; border: 1px solid var(--border); transition: all .3s; }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,.04); }
+    .cli { width: 22px; text-align: center; }
+    .contact-form { display: flex; flex-direction: column; gap: .9rem; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; }
+    .form-group label { font-size: .68rem; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+    .form-group input, .form-group textarea { background: var(--bg); border: 1px solid var(--border); padding: .7rem 1rem; color: var(--text); font-family: var(--mono); font-size: .8rem; outline: none; resize: none; transition: border-color .2s; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { min-height: 110px; }
+
+    /* FOOTER */
+    footer { padding: 1.8rem 4rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: .7rem; color: var(--muted); position: relative; z-index: 1; }
+    footer span { color: var(--accent); }
+    footer .f2 { color: var(--accent2); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 920px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 2.5rem; }
+      .metrics-strip { grid-template-columns: 1fr 1fr; }
+      .metric { border-bottom: 1px solid var(--border); }
+      section { padding: 4rem 1.5rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: .75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">prasanth<span>.m</span> ~/$</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="status-dot"></div>
+    open to opportunities
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Cloud Solution Architect &amp; DevOps Engineer</div>
+    <h1>
+      Prasanth M
+      <span class="name">Building Resilient</span>
+      <span class="role">Cloud at Scale.</span>
+    </h1>
+    <div class="hero-location">
+      📍 <span>Erode, Tamil Nadu, India</span>&nbsp;·&nbsp;🌍 Open to Remote &amp; Global
+    </div>
+    <p class="hero-desc">
+      6+ years architecting cloud solutions across AWS &amp; Azure. Expert in
+      Kubernetes, Terraform, and CI/CD automation. Delivered 20+ enterprise
+      projects — from Aramco to Swiggy Instamart — with measurable impact
+      on uptime, cost reduction, and deployment velocity.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-ghost">Let's Connect</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="terminal">
+      <div class="term-bar">
+        <div class="td r"></div><div class="td y"></div><div class="td g"></div>
+        <span class="term-title">bash — prasanth@cloud-architect:~</span>
+      </div>
+      <div class="term-body">
+        <div class="tl"><span class="pr">$</span><span class="cm">&nbsp;terraform apply -auto-approve</span></div>
+        <span class="out"><span class="vg">✓ Apply complete! 95% config error reduction.</span></span>
+        <div class="tl" style="margin-top:.5rem"><span class="pr">$</span><span class="cm">&nbsp;kubectl get nodes -A</span></div>
+        <span class="out"><span class="vb">prod-node-01 &nbsp;Ready &nbsp;master &nbsp;v1.28</span></span>
+        <span class="out"><span class="vg">prod-node-02 &nbsp;Ready &nbsp;worker &nbsp;v1.28</span></span>
+        <span class="out"><span class="vg">prod-node-03 &nbsp;Ready &nbsp;worker &nbsp;v1.28</span></span>
+        <div class="tl" style="margin-top:.5rem"><span class="pr">$</span><span class="cm">&nbsp;gitlab-runner run --pipeline=prod</span></div>
+        <span class="out"><span class="vb">▸ Pipeline running... deploy time ↓ 60%</span></span>
+        <span class="out"><span class="vg">✓ Production release complete. Zero downtime.</span></span>
+        <div class="tl" style="margin-top:.5rem"><span class="pr">$</span><span class="cm">&nbsp;aws cloudwatch get-metric-stats</span></div>
+        <span class="out"><span class="vo">MTTR ↓ 20% &nbsp;·&nbsp; Uptime 99.9%+ &nbsp;·&nbsp; Costs ↓ 25%</span></span>
+        <div class="tl" style="margin-top:.5rem"><span class="pr">$</span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<div class="metrics-strip">
+  <div class="metric reveal">
+    <div class="metric-num">6<span>+</span></div>
+    <div class="metric-label">Years Experience</div>
+  </div>
+  <div class="metric reveal">
+    <div class="metric-num">95<span>%</span></div>
+    <div class="metric-label">Config Error Reduction</div>
+  </div>
+  <div class="metric reveal">
+    <div class="metric-num">60<span>%</span></div>
+    <div class="metric-label">Faster Deployments</div>
+  </div>
+  <div class="metric reveal">
+    <div class="metric-num">20<span>+</span></div>
+    <div class="metric-label">Enterprise Clients</div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-tag">expertise</div>
+    <h2>Core <em>Tech Stack</em></h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">☁️</div>
+      <div class="skill-title">Cloud Platforms</div>
+      <div class="skill-tags">
+        <span class="tag hl">AWS</span><span class="tag hl">Azure</span><span class="tag hl">GCP</span>
+        <span class="tag">EC2</span><span class="tag">Lambda</span><span class="tag">S3</span>
+        <span class="tag">CloudFront</span><span class="tag">RDS</span><span class="tag">Cosmos DB</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🐳</div>
+      <div class="skill-title">Containers &amp; Orchestration</div>
+      <div class="skill-tags">
+        <span class="tag hl2">Kubernetes</span><span class="tag hl2">Docker</span>
+        <span class="tag">VMware</span><span class="tag">Hyper-V</span>
+        <span class="tag">Container Registries</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-title">CI/CD Pipelines</div>
+      <div class="skill-tags">
+        <span class="tag hl3">Jenkins</span><span class="tag hl3">GitLab CI</span>
+        <span class="tag hl3">Azure DevOps</span><span class="tag">Bitbucket</span>
+        <span class="tag">GitHub Actions</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🏗️</div>
+      <div class="skill-title">Infrastructure as Code</div>
+      <div class="skill-tags">
+        <span class="tag hl">Terraform</span><span class="tag hl">CloudFormation</span>
+        <span class="tag">Ansible</span><span class="tag">Bash</span>
+        <span class="tag">IAM Key Rotation</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">📊</div>
+      <div class="skill-title">Monitoring &amp; Observability</div>
+      <div class="skill-tags">
+        <span class="tag hl2">CloudWatch</span><span class="tag hl2">Prometheus</span>
+        <span class="tag hl2">Splunk</span><span class="tag">ELK Stack</span>
+        <span class="tag">Pingdom</span><span class="tag">Grafana</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-title">Databases</div>
+      <div class="skill-tags">
+        <span class="tag hl4">MySQL</span><span class="tag hl4">Aurora DB</span>
+        <span class="tag hl4">RDS</span><span class="tag">PostgreSQL</span>
+        <span class="tag">MongoDB</span><span class="tag">Cosmos DB</span>
+        <span class="tag">Synapse Analytics</span><span class="tag">Cloud SQL</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">💻</div>
+      <div class="skill-title">Scripting &amp; Development</div>
+      <div class="skill-tags">
+        <span class="tag hl">Python</span><span class="tag hl">Bash / Shell</span>
+        <span class="tag">Groovy</span><span class="tag">PHP</span>
+        <span class="tag">Node.js</span><span class="tag">React</span>
+        <span class="tag">Symfony</span><span class="tag">REST APIs</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔐</div>
+      <div class="skill-title">Security &amp; Identity</div>
+      <div class="skill-tags">
+        <span class="tag hl3">Azure Active Directory</span><span class="tag hl3">SSO</span>
+        <span class="tag">IAM</span><span class="tag">SonarScan</span>
+        <span class="tag">WAN/LAN</span><span class="tag">Firewall</span>
+        <span class="tag">Office 365</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">📋</div>
+      <div class="skill-title">Project &amp; Collaboration</div>
+      <div class="skill-tags">
+        <span class="tag hl2">Jira</span><span class="tag hl2">Agile / Scrum</span>
+        <span class="tag">ITIL</span><span class="tag">SharePoint</span>
+        <span class="tag">GitHub</span><span class="tag">GitLab</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <div class="section-tag">career journey</div>
+    <h2>Work <em>Experience</em></h2>
+  </div>
+  <div class="timeline">
+
+    <div class="exp-item reveal">
+      <div class="exp-dot"></div>
+      <div class="exp-header">
+        <div class="exp-role">Cloud Solution Architect</div>
+        <div class="exp-period">Feb 2023 – Present</div>
+      </div>
+      <div class="exp-company">// Credencys Solution Pvt Inc · India · Full-time</div>
+      <ul class="exp-achievements">
+        <li>Architected multi-tier AWS applications delivering 100% application performance &amp; cyber-attack prevention</li>
+        <li>Built &amp; managed IaC using Terraform &amp; AWS CloudFormation — <strong style="color:#fff">95% reduction</strong> in manual configuration errors</li>
+        <li>Established CI/CD pipelines (Jenkins, GitLab CI, Azure DevOps) — <strong style="color:#fff">60% fewer manual interventions</strong>, 40% faster releases</li>
+        <li>Streamlined Kubernetes deployments for containerized apps — <strong style="color:#fff">30% increase</strong> in application scalability</li>
+        <li>Led on-premises-to-Azure migration — <strong style="color:#fff">25% reduction</strong> in operational costs</li>
+        <li>Automated DB backup &amp; restore procedures — <strong style="color:#fff">90% reduction</strong> in recovery time during DR scenarios</li>
+        <li>Implemented CloudWatch &amp; ELK Stack monitoring — <strong style="color:#fff">20% MTTR improvement</strong></li>
+        <li>Built RESTful APIs with Symfony — <strong style="color:#fff">30% API performance increase</strong>, data speed up 35%</li>
+        <li>Scripted IAM key rotation every 15 days to proactively reduce security risk surface</li>
+        <li>Managed WAN/LAN connectivity, routers, firewalls, and security compliance across environments</li>
+        <li>Conducted team training on Azure best practices &amp; Kubernetes orchestration</li>
+        <li>Participated in Pre-Sales discussions for fully secured infrastructure hosting solutions</li>
+        <li>Executed incident management following ITIL processes</li>
+      </ul>
+      <div class="exp-stack">
+        <span class="tag hl">AWS</span><span class="tag hl">Azure</span>
+        <span class="tag hl2">Kubernetes</span><span class="tag hl2">Docker</span>
+        <span class="tag">Terraform</span><span class="tag">Jenkins</span>
+        <span class="tag">GitLab CI</span><span class="tag">ELK Stack</span>
+        <span class="tag">CloudWatch</span><span class="tag">VMware</span>
+        <span class="tag">Hyper-V</span><span class="tag">Python</span>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-dot" style="background:var(--accent2);box-shadow:0 0 14px var(--accent2);"></div>
+      <div class="exp-header">
+        <div class="exp-role">Technical Specialist</div>
+        <div class="exp-period">Aug 2019 – 2022</div>
+      </div>
+      <div class="exp-company">// Adyard Abu Dhabi LLC · UAE · Full-time</div>
+      <ul class="exp-achievements">
+        <li>Managed Azure Active Directory — user provisioning, corrections &amp; governance for enterprise clients</li>
+        <li>Provided on-site technical support — <strong style="color:#fff">20% productivity increase</strong> per quarter</li>
+        <li>Demonstrated <strong style="color:#fff">95% success rate</strong> resolving complex production issues using AD &amp; Office 365 expertise</li>
+        <li>Monitored &amp; optimized system performance, security &amp; resource utilization — <strong style="color:#fff">30% efficiency gain</strong></li>
+        <li>Improved cross-team project success by <strong style="color:#fff">25%</strong> via strong communication &amp; collaboration</li>
+        <li>Handled internal &amp; external client interactions on licensing, installation &amp; technical support</li>
+        <li>Triaged &amp; assigned helpdesk tickets based on application type and support category</li>
+      </ul>
+      <div class="exp-stack">
+        <span class="tag hl">Azure AD</span><span class="tag hl">Office 365</span>
+        <span class="tag">Active Directory</span><span class="tag">IT Support</span>
+        <span class="tag">Networking</span><span class="tag">ITIL</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-tag">notable work</div>
+    <h2>Key <em>Projects</em></h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT_01</div>
+      <div class="project-title">Multi-Tier AWS Cloud Architecture</div>
+      <div class="project-client">// Aramco · Enterprise Energy</div>
+      <div class="project-desc">Designed and deployed a multi-tier AWS cloud solution for a high-security environment, integrating cyber-attack prevention and 100% performance SLA for critical applications.</div>
+      <div class="project-impact">
+        <span class="impact-badge">100% uptime SLA</span>
+        <span class="impact-badge">Cyber-secured</span>
+      </div>
+      <div class="exp-stack">
+        <span class="tag">AWS</span><span class="tag">Terraform</span><span class="tag">Kubernetes</span><span class="tag">CloudWatch</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT_02</div>
+      <div class="project-title">E-Commerce Cloud Platform</div>
+      <div class="project-client">// Sedano Ecommerce · Valiram · Retail</div>
+      <div class="project-desc">Built scalable cloud infrastructure for retail e-commerce platforms using containerized microservices, CI/CD automation, and CDN optimization for global performance.</div>
+      <div class="project-impact">
+        <span class="impact-badge">↓ 60% deploy time</span>
+        <span class="impact-badge">Auto-scaled</span>
+      </div>
+      <div class="exp-stack">
+        <span class="tag">Docker</span><span class="tag">GitLab CI</span><span class="tag">AWS</span><span class="tag">CloudFront</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT_03</div>
+      <div class="project-title">Pharma &amp; AgriChem Cloud Infra</div>
+      <div class="project-client">// Getz Pharma · Syngenta · Healthcare</div>
+      <div class="project-desc">Architected compliant cloud environments for two global pharmaceutical enterprises ensuring regulatory compliance, secure data storage, and 24/7 monitoring.</div>
+      <div class="project-impact">
+        <span class="impact-badge">Compliance-ready</span>
+        <span class="impact-badge">24/7 monitoring</span>
+      </div>
+      <div class="exp-stack">
+        <span class="tag">Azure</span><span class="tag">Splunk</span><span class="tag">CloudFormation</span><span class="tag">ITIL</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT_04</div>
+      <div class="project-title">Quick Commerce Cloud Platform</div>
+      <div class="project-client">// Swiggy Instamart · FMCG / Delivery</div>
+      <div class="project-desc">Built and managed scalable microservices infrastructure for Swiggy Instamart's rapid-delivery platform with auto-scaling, real-time monitoring, and zero-downtime releases.</div>
+      <div class="project-impact">
+        <span class="impact-badge">Zero downtime</span>
+        <span class="impact-badge">Real-time scaling</span>
+      </div>
+      <div class="exp-stack">
+        <span class="tag">AWS ECS</span><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Bitbucket</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT_05</div>
+      <div class="project-title">Global Consumer Brands DevOps</div>
+      <div class="project-client">// Panasonic · Yokohama · IMC Toys · MTR Foods</div>
+      <div class="project-desc">Delivered end-to-end DevOps for multiple global consumer brands — CI/CD pipelines, Terraform IaC provisioning, and containerized Kubernetes deployments.</div>
+      <div class="project-impact">
+        <span class="impact-badge">4 global brands</span>
+        <span class="impact-badge">Full IaC driven</span>
+      </div>
+      <div class="exp-stack">
+        <span class="tag">Kubernetes</span><span class="tag">Jenkins</span><span class="tag">Terraform</span><span class="tag">GCP</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT_06</div>
+      <div class="project-title">CRM &amp; SaaS Infrastructure</div>
+      <div class="project-client">// Xynage (CRM) · Dare Remote · Idsmed</div>
+      <div class="project-desc">Architected scalable cloud backends for SaaS and CRM platforms, integrating DR strategies, automated DB backup, and ITIL-based incident management workflows.</div>
+      <div class="project-impact">
+        <span class="impact-badge">90% DR recovery</span>
+        <span class="impact-badge">ITIL-compliant</span>
+      </div>
+      <div class="exp-stack">
+        <span class="tag">Azure</span><span class="tag">Ansible</span><span class="tag">Python</span><span class="tag">Jira</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="section-header reveal">
+    <div class="section-tag">portfolio</div>
+    <h2>Clients <em>&amp; Industries</em></h2>
+  </div>
+  <div class="clients-grid reveal">
+    <div class="client-pill">Aramco</div>
+    <div class="client-pill">Sedano Ecommerce</div>
+    <div class="client-pill">Semarchy</div>
+    <div class="client-pill">Getz Pharma</div>
+    <div class="client-pill">Syngenta</div>
+    <div class="client-pill">Yokohama</div>
+    <div class="client-pill">Panasonic</div>
+    <div class="client-pill">IMC Toys</div>
+    <div class="client-pill">Rough Country</div>
+    <div class="client-pill">MTR Foods</div>
+    <div class="client-pill">PCHI</div>
+    <div class="client-pill">Swiggy Instamart</div>
+    <div class="client-pill">Malabar (MGD)</div>
+    <div class="client-pill">Viasat</div>
+    <div class="client-pill">Hollywood Park</div>
+    <div class="client-pill">Radian Weapons</div>
+    <div class="client-pill">Xynage (CRM)</div>
+    <div class="client-pill">Valiram</div>
+    <div class="client-pill">Idsmed</div>
+    <div class="client-pill">Dare Remote</div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header reveal">
+    <div class="section-tag">credentials</div>
+    <h2>Certifications <em>&amp; Training</em></h2>
+  </div>
+  <div class="certs-grid">
+    <div class="cert-card reveal">
+      <div class="cert-icon">🏆</div>
+      <div>
+        <div class="cert-name">AWS Solutions Architect</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+        <div class="cert-year">Cloud Architecture</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">🔷</div>
+      <div>
+        <div class="cert-name">Azure DevOps Engineer</div>
+        <div class="cert-issuer">Microsoft Azure</div>
+        <div class="cert-year">CI/CD &amp; Cloud Operations</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">☸️</div>
+      <div>
+        <div class="cert-name">Kubernetes Administration (CKA)</div>
+        <div class="cert-issuer">CNCF / Linux Foundation</div>
+        <div class="cert-year">Container Orchestration</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">🏅</div>
+      <div>
+        <div class="cert-name">Terraform Associate</div>
+        <div class="cert-issuer">HashiCorp</div>
+        <div class="cert-year">Infrastructure as Code</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">🔐</div>
+      <div>
+        <div class="cert-name">DevSecOps Fundamentals</div>
+        <div class="cert-issuer">Cloud Security Alliance</div>
+        <div class="cert-year">Security &amp; Compliance</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">📊</div>
+      <div>
+        <div class="cert-name">GCP Associate Cloud Engineer</div>
+        <div class="cert-issuer">Google Cloud</div>
+        <div class="cert-year">Multi-Cloud Expertise</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <div class="section-tag">academics</div>
+    <h2>Education <em>&amp; Background</em></h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-degree">🎓 Bachelor of Engineering — Civil</div>
+      <div class="edu-school">Surya Engineering College, Erode</div>
+      <div class="edu-year">2013 – 2017</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">📘 Higher Secondary (HSC)</div>
+      <div class="edu-school">Kongu Kalvi Nilaiyam H.S.S., Erode</div>
+      <div class="edu-year">2012 – 2013</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">📗 Secondary School (SSLC)</div>
+      <div class="edu-school">SVN Higher Secondary School, Erode</div>
+      <div class="edu-year">2010 – 2011</div>
+    </div>
+  </div>
+  <div style="margin-top:2.5rem;">
+    <div class="section-tag" style="margin-bottom:1rem;">🌐 Languages Known</div>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+      <span class="tag hl2">Tamil</span>
+      <span class="tag hl">English</span>
+      <span class="tag hl4">Malayalam</span>
+      <span class="tag hl3">Hindi</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <div class="section-tag">get in touch</div>
+    <h2>Let's <em>Connect</em></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <h3>Open to opportunities.</h3>
+      <p>
+        Looking for a Cloud Solution Architect or Senior DevOps Engineer who
+        brings 6+ years hands-on experience across AWS, Azure, Kubernetes, and
+        enterprise-grade CI/CD? Let's talk. Based in Erode, Tamil Nadu —
+        open to remote, hybrid, and on-site roles globally.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:prasanth.murugesan@yahoo.com" class="contact-link">
+          <span class="cli">✉</span> prasanth.murugesan@yahoo.com
+        </a>
+        <a href="tel:+919600431382" class="contact-link">
+          <span class="cli">📞</span> +91 96004 31382
+        </a>
+        <a href="https://www.linkedin.com/in/prasanthmurugesan-devops" target="_blank" class="contact-link">
+          <span class="cli">in</span> linkedin.com/in/prasanthmurugesan-devops
+        </a>
+        <a href="https://github.com/" target="_blank" class="contact-link">
+          <span class="cli">⌥</span> github.com/prasanth-m (update your handle)
+        </a>
+      </div>
+    </div>
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@company.com" />
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell me about your project or role..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="align-self:flex-start;">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2025 <span>Prasanth M</span> · Cloud Solution Architect &amp; DevOps Engineer</div>
+  <div>Erode, Tamil Nadu 🇮🇳 &nbsp;·&nbsp; <span class="f2">Open to Global Opportunities</span></div>
+  <div>Hosted on <span>GitHub Pages</span> · All systems operational ✓</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(
+    es => es.forEach((e,i) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    }),
+    { threshold: 0.1 }
+  );
+  reveals.forEach((el, i) => {
+    el.style.transitionDelay = (i % 5) * 70 + 'ms';
+    io.observe(el);
+  });
+
+  // Contact form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const orig = btn.textContent;
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = 'var(--accent2)';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+
+  // Active nav
+  const secs = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    secs.forEach(s => { if (window.scrollY >= s.offsetTop - 130) cur = s.id; });
+    links.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : ''; });
+  }, { passive: true });
+</script>
+</body>
+</html>
